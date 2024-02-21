@@ -36,7 +36,7 @@ public class ClienteRepositoryJPA implements IClientesRepo {
 
     @Override
     public List<Cliente> getAll() throws RuntimeException {
-        return em.createQuery("SELECT c FROM Cliente c WHERE c.id > 13", Cliente.class).getResultList();
+        return em.createQuery("SELECT c FROM Cliente c WHERE c.id > 0", Cliente.class).getResultList();
     }
 
     @Override

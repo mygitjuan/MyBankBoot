@@ -1,6 +1,7 @@
 package com.dxc.mypersonalbankapi.modelos.clientes;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 import lombok.*;
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @ToString
 @Entity
 public class Personal extends Cliente {
-    @JsonIgnore
+    @NotBlank
     @Schema(name = "Personal DNI", example = "", required = true)
     private String dni;
 
