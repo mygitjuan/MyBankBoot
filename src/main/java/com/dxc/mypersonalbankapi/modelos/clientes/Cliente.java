@@ -2,6 +2,8 @@ package com.dxc.mypersonalbankapi.modelos.clientes;
 
 import com.dxc.mypersonalbankapi.modelos.prestamos.Prestamo;
 import com.dxc.mypersonalbankapi.modelos.cuentas.Cuenta;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -9,6 +11,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
+
+import javax.validation.constraints.*;
+
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Setter
@@ -18,30 +25,50 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "cliente")
+@Schema(name = "cliente", description = "Modelo cliente")
 public abstract class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
+    @Min(1)
+    @Schema(name = "ClienteID", example = "1", required = false)
     private Integer id;
     @Column(name="nombre")
+    @Size(min = 3, max = 20)
+    @Schema(name = "Cliente name", example = "Juan Perez", required = true)
     private String nombre;
     @Column(name="email")
+    @Size(min = 7, max = 30)
+    @Schema(name = "Cliente email", example = "j@j.com", required = true)
     private String email;
     @Column(name="direccion")
+    @Size(min = 3, max = 20)
+    @Schema(name = "Cliente direcion", example = "Calle 123", required = true)
     private String direccion;
     @Column(name="alta")
+    @DateTimeFormat
+    @NotNull
+    @Schema(name = "Cliente alta", example = "", required = true)
     private LocalDate alta;
     @Column(name="activo")
+    @NotNull
+    @Schema(name = "Cliente activo", example = "", required = true)
     private boolean activo;
     @Column(name="moroso")
+    @NotNull
+    @Schema(name = "Cliente moroso", example = "", required = true)
     private boolean moroso;
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
+    @JsonIgnore
+    @Schema(name = "Cliente lista cuentas", example = "", required = true)
     private List<Cuenta> cuentas;
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
+    @JsonIgnore
+    @Schema(name = "Cliente lista prestamos", example = "", required = true)
     private List<Prestamo> prestamos;
 
 

@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 import lombok.*;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Getter @Setter
 @AllArgsConstructor
@@ -12,6 +14,8 @@ import lombok.*;
 @ToString
 @Entity
 public class Personal extends Cliente {
+    @JsonIgnore
+    @Schema(name = "Personal DNI", example = "", required = true)
     private String dni;
 
     public Personal(Integer id, String nombre, String email, String direccion, LocalDate alta, boolean activo, boolean moroso, String dni) throws Exception{

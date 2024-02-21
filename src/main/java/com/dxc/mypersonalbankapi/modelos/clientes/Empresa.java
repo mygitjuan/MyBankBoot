@@ -7,14 +7,30 @@ import java.util.Arrays;
 
 import lombok.*;
 
+import javax.persistence.Entity;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.*;
+
+import javax.validation.constraints.*;
+
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Entity
 public class Empresa extends Cliente {
+    @JsonIgnore
+    @Schema(name = "Empresa CIF", example = "", required = true)
     private String cif;
     @Column(name="unidades_de_negocio")
+    @JsonIgnore
+    @Schema(name = "Empresa unidades de negocio", example = "", required = true)
     private String[] unidadesNegocio;
 
     public Empresa(Integer id, String nombre, String email, String direccion, LocalDate alta, boolean activo, boolean moroso, String cif, String[] unidadesNegocio) throws Exception{
