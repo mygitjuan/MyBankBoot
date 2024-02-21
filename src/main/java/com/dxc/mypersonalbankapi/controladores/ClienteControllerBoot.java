@@ -1,13 +1,10 @@
 package com.dxc.mypersonalbankapi.controladores;
 
+import com.dxc.mypersonalbankapi.modelos.clientes.StatusMessage;
 import com.dxc.mypersonalbankapi.modelos.clientes.Cliente;
 import com.dxc.mypersonalbankapi.modelos.clientes.Empresa;
 import com.dxc.mypersonalbankapi.modelos.clientes.Personal;
 import com.dxc.mypersonalbankapi.persistencia.ClienteRepositoryJPA;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
@@ -33,10 +29,16 @@ public class ClienteControllerBoot {
     private ClienteRepositoryJPA repo;
 
     @PostMapping(value = "/personal", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<Personal> save(@RequestBody @Valid Personal newCliente) throws Exception {
+    public ResponseEntity<Object> save(@RequestBody @Valid Personal newCliente) throws Exception {
         logger.info("newCliente:" + newCliente);
         newCliente.setId(null);
-      return new ResponseEntity<>((Personal) repo.addClient(newCliente), HttpStatus.CREATED);
+
+
+
+      if (newCliente.validar()) return new ResponseEntity<>((Personal) repo.addClient(newCliente), HttpStatus.CREATED);
+      else {
+          return new ResponseEntity<>(new StatusMessage(HttpStatus.PRECONDITION_FAILED.value(), "Cliente no válido"), HttpStatus.PRECONDITION_FAILED);
+      }
        // return null;
     }
 
