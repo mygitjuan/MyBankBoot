@@ -19,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Personal extends Cliente {
     //@NotBlank
     //@Size(max = 9)
-    @Schema(name = "Personal DNI", example = "", required = true)
+    @Schema(name = "Personal DNI", example = "12345678X", required = true)
     private String dni;
 
     public Personal(Integer id, String nombre, String email, String direccion, LocalDate alta, boolean activo, boolean moroso, String dni) throws Exception{
@@ -33,7 +33,7 @@ public class Personal extends Cliente {
             char ltrDNI = dni.charAt(8);
             int valNumDni = Integer.parseInt(intPartDNI);
             return valNumDni > 0 || !Character.isLetter(ltrDNI);
-        } else return false;
+        } else throw new RuntimeException("DNI no válido. El formato debe ser 12345678X");
     }
 
         @Override

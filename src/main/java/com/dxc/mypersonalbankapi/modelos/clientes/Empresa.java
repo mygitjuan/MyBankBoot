@@ -27,7 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Empresa extends Cliente {
     //@NotBlank
     //@Size(max = 9)
-    @Schema(name = "Empresa CIF", example = "", required = true)
+    @Schema(name = "Empresa CIF", example = "B31313133", required = true)
     private String cif;
     @Column(name="unidades_de_negocio")
     @JsonIgnore
