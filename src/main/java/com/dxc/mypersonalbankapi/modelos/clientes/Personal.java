@@ -1,7 +1,9 @@
 package com.dxc.mypersonalbankapi.modelos.clientes;
 
 import javax.persistence.Entity;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 import lombok.*;
@@ -16,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Personal extends Cliente {
     @NotBlank
+    //@Size(max = 9)
     @Schema(name = "Personal DNI", example = "", required = true)
     private String dni;
 

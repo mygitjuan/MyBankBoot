@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.AssertTrue;
 import java.util.List;
 
 @RestController
@@ -33,13 +34,12 @@ public class ClienteControllerBoot {
         logger.info("newCliente:" + newCliente);
         newCliente.setId(null);
 
-
-
-      if (newCliente.validar()) return new ResponseEntity<>((Personal) repo.addClient(newCliente), HttpStatus.CREATED);
-      else {
-          return new ResponseEntity<>(new StatusMessage(HttpStatus.PRECONDITION_FAILED.value(), "Cliente no válido"), HttpStatus.PRECONDITION_FAILED);
+      if (newCliente.validar()) {
+          return new ResponseEntity<>((Personal) repo.addClient(newCliente), HttpStatus.CREATED);
       }
-       // return null;
+      else {
+          return new ResponseEntity<>(new StatusMessage(HttpStatus.BAD_REQUEST.value(), "Cliente no válido"), HttpStatus.BAD_REQUEST);
+      }
     }
 
     @PostMapping(value = "/empresa", consumes = {MediaType.APPLICATION_JSON_VALUE}, produces = {MediaType.APPLICATION_JSON_VALUE})

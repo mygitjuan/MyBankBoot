@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class Empresa extends Cliente {
     @NotBlank
+    @Size(max = 9)
     @Schema(name = "Empresa CIF", example = "", required = true)
     private String cif;
     @Column(name="unidades_de_negocio")
