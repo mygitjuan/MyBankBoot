@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @ToString
 @Entity
 public class Personal extends Cliente {
-    @NotBlank
+    //@NotBlank
     //@Size(max = 9)
     @Schema(name = "Personal DNI", example = "", required = true)
     private String dni;
